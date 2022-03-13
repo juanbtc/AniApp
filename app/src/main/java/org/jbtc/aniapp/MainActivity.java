@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        Log.i("TAG", "onCreate: ");
+        Log.i("Evento", "onCreate: ");
 
 
 
@@ -80,30 +80,37 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("TAG", "onStart: ");
+        Log.i("Evento", "onStart: ");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("TAG", "onResume: ");
+        Log.i("Evento", "onResume: ");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.i("TAG", "onPause: ");
+        Log.i("Evento", "onPause: ");
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.i("TAG", "onStop: ");
+        Log.i("Evento", "onStop: ");
+    }
+
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Log.i("Evento","onRestart: ");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Log.i("TAG", "onDestroy: ");
+        Log.i("Evento", "onDestroy: ");
     }
+
 }

@@ -10,4 +10,10 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
+
+    <string name="init_welcome">Bienvenido a la seccion Home</string>
+    <string name="init_button">Empecemos</string>
+    <string name="user_name">Jairo Rios</string>
+    <string name="user_email">jairo.rios@gmail.com</string>
+
 </resources>
