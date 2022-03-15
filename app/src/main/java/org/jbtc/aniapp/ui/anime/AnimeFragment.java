@@ -1,4 +1,4 @@
-package org.jbtc.aniapp.ui.home;
+package org.jbtc.aniapp.ui.anime;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,20 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.jbtc.aniapp.R;
-import org.jbtc.aniapp.databinding.FragmentHomeBinding;
+import org.jbtc.aniapp.databinding.FragmentAnimeBinding;
 
-public class HomeFragment extends Fragment {
 
-    private FragmentHomeBinding binding;
+public class AnimeFragment extends Fragment {
+
+    private FragmentAnimeBinding binding;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        AnimeViewModel animeViewModel =
+                new ViewModelProvider(this).get(AnimeViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentAnimeBinding.inflate(inflater, container, false);
 
         View root = binding.getRoot();
 
@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
 
 
         final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        animeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
@@ -49,4 +49,5 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 }
