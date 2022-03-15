@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_anime,
                 R.id.nav_episode,
-                R.id.nav_gallery)
+                R.id.nav_song,
+                R.id.nav_user)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);

@@ -9,8 +9,8 @@
 
     <string name="menu_anime">Anime</string>
     <string name="menu_episode">Episodios</string>
-    <string name="menu_gallery">Gallery</string>
-
+    <string name="menu_song">Song</string>
+    <string name="menu_user">User</string>
     <string name="Text_Welcome" >Welcome to my app Anime</string>
     <string name="Text_Button">Press me</string>
 

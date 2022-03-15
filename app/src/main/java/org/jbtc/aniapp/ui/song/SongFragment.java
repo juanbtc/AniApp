@@ -1,4 +1,4 @@
-package org.jbtc.aniapp.ui.gallery;
+package org.jbtc.aniapp.ui.song;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.jbtc.aniapp.databinding.FragmentGalleryBinding;
+import org.jbtc.aniapp.databinding.FragmentSongBinding;
 
-public class GalleryFragment extends Fragment {
+public class SongFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentSongBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        SongViewModel songViewModel =
+                new ViewModelProvider(this).get(SongViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentSongBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        songViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

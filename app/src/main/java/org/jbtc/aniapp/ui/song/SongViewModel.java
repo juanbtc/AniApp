@@ -1,16 +1,16 @@
-package org.jbtc.aniapp.ui.gallery;
+package org.jbtc.aniapp.ui.song;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class SongViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public SongViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is song fragment");
     }
 
     public LiveData<String> getText() {
