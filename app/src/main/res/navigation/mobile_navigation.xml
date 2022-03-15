@@ -3,23 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
+    app:startDestination="@+id/nav_anime">
 
     <fragment
-        android:id="@+id/nav_home"
-        android:name="org.jbtc.aniapp.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/nav_anime"
+        android:name="org.jbtc.aniapp.ui.anime.AnimeFragment"
+        android:label="@string/menu_anime"
+        tools:layout="@layout/fragment_anime" />
 
     <fragment
         android:id="@+id/nav_gallery"
         android:name="org.jbtc.aniapp.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
-
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="org.jbtc.aniapp.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_episode"
+        android:name="org.jbtc.aniapp.ui.episode.EpisodeFragment"
+        android:label="@string/menu_episode"
+        tools:layout="@layout/fragment_episode" />
+
+
 </navigation>

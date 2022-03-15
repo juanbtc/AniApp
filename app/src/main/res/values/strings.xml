@@ -7,9 +7,10 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_anime">Anime</string>
+    <string name="menu_episode">Episodios</string>
     <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
+
     <string name="Text_Welcome" >Welcome to my app Anime</string>
     <string name="Text_Button">Press me</string>
 
