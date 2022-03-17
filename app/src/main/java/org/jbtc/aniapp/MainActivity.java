@@ -17,6 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jbtc.aniapp.databinding.ActivityMainBinding;
+import org.jbtc.aniapp.model.Sagas;
 
 public class MainActivity extends AppCompatActivity {
 
