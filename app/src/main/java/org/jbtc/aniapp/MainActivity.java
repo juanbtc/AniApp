@@ -7,6 +7,8 @@ import android.view.Menu;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
@@ -16,8 +18,20 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.databinding.ActivityMainBinding;
 import org.jbtc.aniapp.model.Sagas;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,6 +67,29 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        init();
+    }
+
+    private void init(){
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.aniapi.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        AnimeService service = retrofit.create(AnimeService.class);
+        service.validacion().enqueue(new Callback<JsonObject>() {
+            @Override
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                Log.i("TAG", "onResponse: Respuesta: "+response+ " post: "+response.body());
+            }
+
+            @Override
+            public void onFailure(Call<JsonObject> call, Throwable t) {
+                Log.e("TAG", "onFailure: ", t);
+            }
+        });
+
     }
 
     @Override
