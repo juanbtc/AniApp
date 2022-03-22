@@ -14,7 +14,7 @@ import retrofit2.http.Path;
 public interface AnimeService {
 
     @Headers({
-            "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE0MjIiLCJuYmYiOjE2NDc0NzY0NDUsImV4cCI6MTY1MDA2ODQ0NSwiaWF0IjoxNjQ3NDc2NDQ1fQ.V5Agn5pUvTcBtDHsf3a26GW5VaUl_l0jVR6GgYkQ4Xs",
+            "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzNTEiLCJuYmYiOjE2NDY4NzEyMzksImV4cCI6MTY0OTQ2MzIzOSwiaWF0IjoxNjQ2ODcxMjM5fQ.Y_ZjaJJOEi-Nk_Q_IqtoEC_Lf-mIxnCs-eOUu2ZhoYA",
             "Content-Type: application/json",
             "Accept: application/json"
     })
@@ -22,7 +22,7 @@ public interface AnimeService {
     Call<RespuestaAnime> getAnime(@Path("id") int id);
 
     @Headers({
-            "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE0MjIiLCJuYmYiOjE2NDc0NzY0NDUsImV4cCI6MTY1MDA2ODQ0NSwiaWF0IjoxNjQ3NDc2NDQ1fQ.V5Agn5pUvTcBtDHsf3a26GW5VaUl_l0jVR6GgYkQ4Xs",
+            "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEzNTEiLCJuYmYiOjE2NDY4NzEyMzksImV4cCI6MTY0OTQ2MzIzOSwiaWF0IjoxNjQ2ODcxMjM5fQ.Y_ZjaJJOEi-Nk_Q_IqtoEC_Lf-mIxnCs-eOUu2ZhoYA",
             "Content-Type: application/json",
             "Accept: application/json"
     })

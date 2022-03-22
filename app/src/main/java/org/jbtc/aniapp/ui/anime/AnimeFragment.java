@@ -43,19 +43,14 @@ public class AnimeFragment extends Fragment {
 
         View root = binding.getRoot();
 
-        binding.button.setText(R.string.Text_Button);
+
         //String texto = binding.button.getText().toString();
 
-        binding.button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Home fragment", Toast.LENGTH_LONG).show();
-            }
-        });
 
 
-        final TextView textView = binding.textHome;
-        animeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+
+
         return root;
     }
 
