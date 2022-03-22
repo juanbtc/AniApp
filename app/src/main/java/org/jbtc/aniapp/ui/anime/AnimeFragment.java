@@ -1,6 +1,5 @@
 package org.jbtc.aniapp.ui.anime;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,29 +12,27 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-import org.jbtc.aniapp.R;
+import org.jbtc.aniapp.adapter.AnimeAdapter;
+import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.databinding.FragmentAnimeBinding;
+import org.jbtc.aniapp.model.RespuestaAnimes;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class AnimeFragment extends Fragment {
 
     private FragmentAnimeBinding binding;
+    private AnimeAdapter adapter;
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.i("CiclosDeVidaF:","onAttach");
-    }
+    public View onCreateView(@NonNull LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Log.i("CiclosDeVidaF:","onCreate");
-    }
-
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Log.i("CiclosDeVidaF:","onCreateView");
         AnimeViewModel animeViewModel =
                 new ViewModelProvider(this).get(AnimeViewModel.class);
 
@@ -43,63 +40,48 @@ public class AnimeFragment extends Fragment {
 
         View root = binding.getRoot();
 
-
-        //String texto = binding.button.getText().toString();
-
-
-
-
-
-
         return root;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        Log.i("CiclosDeVidaF:","onActivityCreated");
-        super.onActivityCreated(savedInstanceState);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initAdapter();
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.aniapi.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AnimeService animeService = retrofit.create(AnimeService.class);
+        animeService.getAnimes().enqueue(new Callback<RespuestaAnimes>() {
+            @Override
+            public void onResponse(Call<RespuestaAnimes> call, Response<RespuestaAnimes> response) {
+                adapter.setItems(response.body().getData().getDocuments());
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaAnimes> call, Throwable t) {
+                Log.e("TAG", "onFailure: ", t);
+            }
+        });
+
+
     }
 
-    @Override
-    public void onStart() {
-        Log.i("CiclosDeVidaF:","onStart");
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        Log.i("CiclosDeVidaF:","onResume");
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        Log.i("CiclosDeVidaF:","onPause");
-        super.onPause();
-    }
-
-    @Override
-    public void onStop() {
-        Log.i("CiclosDeVidaF:","onStop");
-        super.onStop();
+    private void initAdapter() {
+        binding.rvAnimeList.setHasFixedSize(true);
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
+        binding.rvAnimeList.setLayoutManager(gridLayoutManager);
+        adapter = new AnimeAdapter();
+        binding.rvAnimeList.setAdapter(adapter);
     }
 
     @Override
     public void onDestroyView() {
-        Log.i("CiclosDeVidaF:","onDestroyView");
         super.onDestroyView();
         binding = null;
     }
 
-    @Override
-    public void onDestroy() {
-        Log.i("CiclosDeVidaF:","onDestroy");
-        super.onDestroy();
-    }
-
-    @Override
-    public void onDetach() {
-        Log.i("CiclosDeVidaF:","onDetach");
-        super.onDetach();
-    }
 }
