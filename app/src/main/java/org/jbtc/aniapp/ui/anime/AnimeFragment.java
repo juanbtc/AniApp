@@ -1,6 +1,7 @@
 package org.jbtc.aniapp.ui.anime;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,16 +9,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import org.jbtc.aniapp.adapter.AnimeAdapter;
+import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.databinding.FragmentAnimeBinding;
+import org.jbtc.aniapp.model.RespuestaAnimes;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class AnimeFragment extends Fragment {
 
     private FragmentAnimeBinding binding;
-
+    private AnimeAdapter adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
 
@@ -28,20 +40,42 @@ public class AnimeFragment extends Fragment {
 
         View root = binding.getRoot();
 
-        binding.button.setText("OK");
-        //String texto = binding.button.getText().toString();
+        return root;
+    }
 
-        binding.button.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        initAdapter();
+
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://api.aniapi.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        AnimeService animeService = retrofit.create(AnimeService.class);
+        animeService.getAnimes().enqueue(new Callback<RespuestaAnimes>() {
             @Override
-            public void onClick(View view) {
-                Toast.makeText(getContext(), "Hola Mundo", Toast.LENGTH_LONG).show();
+            public void onResponse(Call<RespuestaAnimes> call, Response<RespuestaAnimes> response) {
+                adapter.setItems(response.body().getData().getDocuments());
+            }
+
+            @Override
+            public void onFailure(Call<RespuestaAnimes> call, Throwable t) {
+                Log.e("TAG", "onFailure: ", t);
             }
         });
 
 
-        final TextView textView = binding.textHome;
-        animeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
+    }
+
+    private void initAdapter() {
+        binding.rvAnimeList.setHasFixedSize(true);
+        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
+        binding.rvAnimeList.setLayoutManager(gridLayoutManager);
+        adapter = new AnimeAdapter();
+        binding.rvAnimeList.setAdapter(adapter);
     }
 
     @Override
