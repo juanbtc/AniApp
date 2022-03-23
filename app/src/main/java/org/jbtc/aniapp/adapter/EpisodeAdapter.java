@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,17 +17,18 @@ import com.google.android.material.imageview.ShapeableImageView;
 
 import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.model.Anime;
+import org.jbtc.aniapp.model.Episode;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHolder> {
-    private List<Anime> items = new ArrayList<>();
+public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeViewHolder> {
+    private List<Episode> items = new ArrayList<>();
     private Anime item= new Anime();
 
-    public void setItems(List<Anime> items) {
+    public void setItems(List<Episode> items) {
         this.items = items;
         notifyDataSetChanged();
     }
@@ -35,40 +37,48 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         notifyDataSetChanged();
     }
 
-
     @NonNull
     @Override
-    public AnimeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_anime,parent,false);
-        AnimeViewHolder animeViewHolder = new AnimeViewHolder(v);
-        return animeViewHolder;
+    public EpisodeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview_episode,parent,false);
+        EpisodeViewHolder episodeViewHolder = new EpisodeViewHolder(v);
+        return episodeViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AnimeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull EpisodeViewHolder holder, int position) {
         Log.i("TAG", "onBindViewHolder: se ejecuto el on bind");
-        holder.name.setText( items.get(position).getTitles().getEn() );
-        holder.description.setText(items.get(position).getDescriptions().getEn());
-        new AnimeViewHolder.DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
+        holder.name.setText( items.get(position).getTitle());
+        int numero=items.get(position).getNumber();
+        holder.number.setText(item.getTitles().getEn());
+        holder.video.loadUrl(items.get(position).getVideo());
+       // new EpisodeViewHolder.DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
 
     }
 
 
-        @Override
+    @Override
     public int getItemCount() {
         return items.size();
     }
 
-    static class AnimeViewHolder extends RecyclerView.ViewHolder{
-        TextView name;
-        TextView description;
-        ShapeableImageView cover_image;
-        public AnimeViewHolder(@NonNull View itemView) {
+    static class EpisodeViewHolder extends RecyclerView.ViewHolder{
+
+         TextView name;
+         TextView number;
+         WebView  video;
+
+
+        public EpisodeViewHolder(@NonNull View itemView) {
+
             super(itemView);
-            name = itemView.findViewById(R.id.cv_anime_name);
-            description= itemView.findViewById(R.id.cv_anime_descripcion);
-            cover_image= itemView.findViewById(R.id.cv_anime_cover_image);
+
+             name = itemView.findViewById(R.id.cv_episode_name);
+             number= itemView.findViewById(R.id.cv_episode_numero);
+             video = itemView.findViewById(R.id.cv_episode_video);
+
         }
+
 
         private static class DownLoadImageTask extends AsyncTask<String,Void, Bitmap> {
             ShapeableImageView imageView;
@@ -101,5 +111,5 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         }
 
 
-}
+    }
 }

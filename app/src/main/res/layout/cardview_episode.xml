@@ -2,25 +2,24 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         >
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/cv_anime_cover_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <WebView
+            android:id="@+id/cv_episode_video"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="15dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
 
-            app:shapeAppearanceOverlay="@style/RoundedSquare"
-            app:strokeColor="#e4935d" />
+             />
 
 
         <TextView
@@ -31,11 +30,11 @@
             android:text="Nombre:"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cv_anime_name"
-            app:layout_constraintTop_toBottomOf="@+id/cv_anime_cover_image" />
+            app:layout_constraintEnd_toStartOf="@+id/cv_episode_name"
+            app:layout_constraintTop_toBottomOf="@+id/cv_episode_video" />
 
         <TextView
-            android:id="@+id/cv_anime_name"
+            android:id="@+id/cv_episode_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -46,7 +45,7 @@
             app:layout_constraintTop_toTopOf="@id/textView2" />
 
         <TextView
-            android:id="@+id/cv_anime_descripcion"
+            android:id="@+id/cv_episode_numero"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
