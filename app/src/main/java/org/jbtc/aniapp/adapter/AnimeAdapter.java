@@ -33,18 +33,22 @@ import java.util.List;
 public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHolder> {
     private List<Anime> items = new ArrayList<>();
 
-    private Anime item= new Anime();
+    //private Anime item= new Anime();
 
+
+    public AnimeAdapter(OnClick onClick) {
+        this.onClick = onClick;
+    }
 
     public void setItems(List<Anime> items) {
         this.items = items;
         notifyDataSetChanged();
     }
 
-    public void setItem(Anime item) {
+    /*public void setItem(Anime item) {
         this.item = item;
         notifyDataSetChanged();
-    }
+    }*/
 
 
 
@@ -109,10 +113,19 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
             name = itemView.findViewById(R.id.cv_anime_name);
             description = itemView.findViewById(R.id.cv_anime_descripcion);
             cover_image = itemView.findViewById(R.id.cv_anime_cover_image);
+
+            itemView.setOnClickListener(view -> {
+                onClick.onClickCard( items.get(getAdapterPosition()) );
+            });
         }
 
 
 
+    }
+
+    OnClick onClick;
+    public interface OnClick{
+        void onClickCard(Anime anime);
     }
 
 }

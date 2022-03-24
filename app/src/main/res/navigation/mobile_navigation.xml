@@ -9,7 +9,11 @@
         android:id="@+id/nav_anime"
         android:name="org.jbtc.aniapp.ui.anime.AnimeFragment"
         android:label="@string/menu_anime"
-        tools:layout="@layout/fragment_anime" />
+        tools:layout="@layout/fragment_anime" >
+        <action
+            android:id="@+id/action_nav_anime_to_nav_anime_detaill"
+            app:destination="@id/nav_anime_detaill" />
+    </fragment>
 
 
     <fragment
@@ -27,6 +31,14 @@
         android:name="org.jbtc.aniapp.ui.user.UserFragment"
         android:label="@string/menu_user"
         tools:layout="@layout/fragment_user" />
+
+
+
+    <fragment
+        android:id="@+id/nav_anime_detaill"
+        android:name="org.jbtc.aniapp.ui.anime.AnimeDetaillFragment"
+        android:label=""
+        tools:layout="@layout/fragment_anime_detaill" />
 
 
 </navigation>

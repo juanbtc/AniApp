@@ -12,11 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.adapter.AnimeAdapter;
 import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.databinding.FragmentAnimeBinding;
+import org.jbtc.aniapp.model.Anime;
 import org.jbtc.aniapp.model.RespuestaAnimes;
 
 import retrofit2.Call;
@@ -26,7 +29,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class AnimeFragment extends Fragment {
+public class AnimeFragment extends Fragment implements AnimeAdapter.OnClick {
 
     private FragmentAnimeBinding binding;
     private AnimeAdapter adapter;
@@ -74,7 +77,7 @@ public class AnimeFragment extends Fragment {
         binding.rvAnimeList.setHasFixedSize(true);
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
         binding.rvAnimeList.setLayoutManager(gridLayoutManager);
-        adapter = new AnimeAdapter();
+        adapter = new AnimeAdapter(this);
         binding.rvAnimeList.setAdapter(adapter);
     }
 
@@ -84,4 +87,11 @@ public class AnimeFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    public void onClickCard(Anime anime) {
+        Bundle b = new Bundle();
+        b.putInt("id",anime.getId());
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_nav_anime_to_nav_anime_detaill,b);
+    }
 }
