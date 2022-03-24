@@ -8,4 +8,5 @@ public class Pagination {
     private int count;
     //documents
     private int last_page;
+
 }
