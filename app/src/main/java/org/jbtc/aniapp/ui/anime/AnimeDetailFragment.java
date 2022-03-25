@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 
 import org.jbtc.aniapp.databinding.FragmentAnimeDetailBinding;
 
-public class AnimeDetaillFragment extends Fragment {
+public class AnimeDetailFragment extends Fragment {
     private FragmentAnimeDetailBinding binding;
 
     @Nullable

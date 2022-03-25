@@ -40,10 +40,6 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         this.onClick = onClick;
     }
 
-    public AnimeAdapter() {
-
-    }
-
     public void setItems(List<Anime> items) {
         this.items = items;
         notifyDataSetChanged();
