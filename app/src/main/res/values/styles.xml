@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="item_pagination">
+        <item name="android:padding">10dp</item>
+    </style>
+</resources>
