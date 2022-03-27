@@ -12,9 +12,16 @@
         android:id="@+id/rv_anime_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         tools:listitem="@layout/cardview_anime"/>
 
-
+    <fragment
+        android:id="@+id/frag_anime_pagination"
+        android:name="org.jbtc.aniapp.component.PaginationFragment"
+        class="org.jbtc.aniapp.component.PaginationFragment"
+        tools:layout="@layout/fragment_pagination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 </LinearLayout>
