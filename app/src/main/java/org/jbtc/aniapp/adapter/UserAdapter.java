@@ -1,5 +1,6 @@
 package org.jbtc.aniapp.adapter;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -13,7 +14,9 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.squareup.picasso.Picasso;
 
 import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.model.Anime;
@@ -27,7 +30,7 @@ import java.util.List;
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
     private List<User> items = new ArrayList<>();
     private User item= new User();
-
+    private Context context;
     public void setItems(List<User> items) {
         this.items = items;
         notifyDataSetChanged();
@@ -36,7 +39,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         this.item = item;
         notifyDataSetChanged();
     }
-
+    public UserAdapter(Context context){
+    this.context= context;
+    }
 
     @NonNull
     @Override
@@ -67,7 +72,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
             holder.gender.setText("FEMALE");}
         if (items.get(position).getAvatar() != null) {
 
-            new UserViewHolder.DownLoadImageTask(holder.avatar).execute(items.get(position).getAvatar());
+            //new UserViewHolder.DownLoadImageTask(holder.avatar).execute(items.get(position).getAvatar());
+             Glide.with(context).load(items.get(position).getAvatar()).into(holder.avatar);
+            //Picasso.get().load(items.get(position).getAvatar()).into(holder.avatar);
         }
         else {
            holder.avatar.setImageResource(R.drawable.ic_user);
@@ -100,35 +107,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder
         }
 
 
-        private static class DownLoadImageTask extends AsyncTask<String,Void, Bitmap> {
-            ShapeableImageView imageView;
 
-            public DownLoadImageTask(ShapeableImageView imageView){
-                this.imageView = imageView;
-            }
-
-
-            @Override
-            protected Bitmap doInBackground(String... urls) {
-                String urlOfImage = urls[0];
-                Bitmap logo = null;
-                try{
-                    InputStream is = new URL(urlOfImage).openStream();
-                /*
-                    decodeStream(InputStream is)
-                        Decode an input stream into a bitmap.
-                 */
-                    logo = BitmapFactory.decodeStream(is);
-                }catch(Exception e){ // Catch the download exception
-                    e.printStackTrace();
-                }
-                return logo;
-            }
-
-            protected void onPostExecute(Bitmap result){
-                imageView.setImageBitmap(result);
-            }
-        }
 
 
     }

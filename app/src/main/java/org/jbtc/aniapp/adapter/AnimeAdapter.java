@@ -1,6 +1,7 @@
 package org.jbtc.aniapp.adapter;
 
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -20,6 +21,7 @@ import org.jbtc.aniapp.model.Anime;
 
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.squareup.picasso.Picasso;
 
 import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.model.Anime;
@@ -65,7 +67,8 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         Log.i("TAG", "onBindViewHolder: se ejecuto el on bind");
         holder.name.setText( items.get(position).getTitles().getEn() );
         holder.description.setText(items.get(position).getDescriptions().getEn());
-        new DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
+        //new DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
+        Picasso.get().load(items.get(position).getCover_image()).into(holder.cover_image);
     }
 
     @Override
@@ -73,35 +76,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
         return items.size();
     }
 
-    public class DownLoadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ShapeableImageView imageView;
 
-        public DownLoadImageTask(ShapeableImageView imageView) {
-            this.imageView = imageView;
-        }
-
-
-        @Override
-        protected Bitmap doInBackground(String... urls) {
-            String urlOfImage = urls[0];
-            Bitmap logo = null;
-            try {
-                InputStream is = new URL(urlOfImage).openStream();
-                /*
-                    decodeStream(InputStream is)
-                        Decode an input stream into a bitmap.
-                 */
-                logo = BitmapFactory.decodeStream(is);
-            } catch (Exception e) { // Catch the download exception
-                e.printStackTrace();
-            }
-            return logo;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 
     class AnimeViewHolder extends RecyclerView.ViewHolder {
         TextView name;
