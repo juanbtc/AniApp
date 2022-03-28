@@ -5,11 +5,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonObject;
 
 import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.appBarMain.toolbar);
+        setSupportActionBar(binding.appBarMain.toolbarMain);
         /*binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,34 +69,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        //initRetrofit();
     }
-
-    /*private void initRetrofit() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.aniapi.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        AnimeService animeService = retrofit.create(AnimeService.class);
-
-        animeService.getAnimes().enqueue(new Callback<RespuestaAnimes>() {
-            @Override
-            public void onResponse(Call<RespuestaAnimes> call, Response<RespuestaAnimes> response) {
-                //Log.i("TAG", "onResponse: animes: "+response.body());
-
-                System.out.println("animes: "+response.body().getData().getDocuments());
-                System.out.println("respuesta: "+response);
-            }
-
-            @Override
-            public void onFailure(Call<RespuestaAnimes> call, Throwable t) {
-
-            }
-        });
-
-    }*/
-
 
 
     @Override
@@ -115,6 +90,38 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    /*public void loadImgToolbar(String src_img) {
+        Picasso.get()
+                .load(src_img)
+                .into(binding.appBarMain.ivCollToolCont);
+    }*/
+
+    public void setDisplayShowTitleEnabled(boolean enabled, boolean lockBar){
+        try {
+            CoordinatorLayout.LayoutParams params=null;
+            if(lockBar)
+                params = new CoordinatorLayout.LayoutParams(
+                        CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                        CoordinatorLayout.LayoutParams.WRAP_CONTENT
+                );
+            else
+                params = new CoordinatorLayout.LayoutParams(
+                        CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                        getResources().getDimensionPixelSize(R.dimen.app_bar_height)
+                );
+            AppBarLayout appBar = findViewById(R.id.Appbar_layout_main);
+            appBar.setLayoutParams(params);
+            //binding.appBarMain.AppbarLayoutMain.setLayoutParams(params);
+
+
+            binding.appBarMain.collToolbarLayoutMain.setTitleEnabled(enabled);
+            /*siempre tiene anular la imagen por que cambia de pantalla*/
+            binding.appBarMain.ivCollToolCont.setImageDrawable(null);
+        }catch (Exception e){
+            Log.e("TAG", "setDisplayShowTitleEnabled: ",e);
+        }
     }
 
     @Override

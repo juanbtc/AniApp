@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import org.jbtc.aniapp.MainActivity;
 import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.adapter.AnimeAdapter;
 import org.jbtc.aniapp.component.PaginationFragment;
@@ -23,6 +24,7 @@ import org.jbtc.aniapp.databinding.FragmentAnimeBinding;
 import org.jbtc.aniapp.model.Anime;
 import org.jbtc.aniapp.model.RespuestaAnimes;
 import org.jbtc.aniapp.provider.AniApiProvider;
+import org.jbtc.aniapp.utils.RecyclerItemDecoration;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -79,6 +81,9 @@ public class AnimeFragment extends Fragment implements
 
         initAdapter();
 
+        ( (MainActivity)getActivity() ).setDisplayShowTitleEnabled(false,true);
+        ( (MainActivity)getActivity() ).setTitle(getResources().getString(R.string.menu_anime));
+
         PaginationFragment paginationFragment = (PaginationFragment) getChildFragmentManager().findFragmentById(R.id.frag_anime_pagination);
         paginationFragment.setOnClickCallback(this);
 
@@ -95,9 +100,12 @@ public class AnimeFragment extends Fragment implements
 
     private void initAdapter() {
         binding.rvAnimeList.setHasFixedSize(true);
-        LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
-        binding.rvAnimeList.setLayoutManager(gridLayoutManager);
+        //LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
+        //binding.rvAnimeList.setLayoutManager(gridLayoutManager);
         adapter = new AnimeAdapter(this);
+        binding.rvAnimeList.addItemDecoration(
+                new RecyclerItemDecoration(getResources()
+                        .getDimensionPixelSize(R.dimen.space_item_decoration)));
         binding.rvAnimeList.setAdapter(adapter);
     }
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -64,8 +65,8 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
     public void onBindViewHolder(@NonNull AnimeViewHolder holder, int position) {
         Log.i("TAG", "onBindViewHolder: se ejecuto el on bind");
         holder.name.setText( items.get(position).getTitles().getEn() );
-        holder.description.setText(items.get(position).getDescriptions().getEn());
-        new DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
+        //holder.description.setText(items.get(position).getDescriptions().getEn());
+        //new DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
     }
 
     @Override
@@ -105,13 +106,11 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
 
     class AnimeViewHolder extends RecyclerView.ViewHolder {
         TextView name;
-        TextView description;
-        ShapeableImageView cover_image;
+        ImageView cover_image;
 
         public AnimeViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.cv_anime_name);
-            description = itemView.findViewById(R.id.cv_anime_descripcion);
             cover_image = itemView.findViewById(R.id.cv_anime_cover_image);
 
             itemView.setOnClickListener(view -> {
