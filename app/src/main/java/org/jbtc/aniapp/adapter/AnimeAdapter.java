@@ -21,6 +21,7 @@ import org.jbtc.aniapp.model.Anime;
 
 
 import com.google.android.material.imageview.ShapeableImageView;
+import com.squareup.picasso.Picasso;
 
 import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.model.Anime;
@@ -64,7 +65,14 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
     @Override
     public void onBindViewHolder(@NonNull AnimeViewHolder holder, int position) {
         Log.i("TAG", "onBindViewHolder: se ejecuto el on bind");
-        holder.name.setText( items.get(position).getTitles().getEn() );
+        //holder.name.setText( items.get(position).getTitles().getEn() );
+
+
+        Picasso.get()
+                .load(items.get(position).getCover_image())
+                .fit().centerCrop()
+                .into(holder.cover_image);
+
         //holder.description.setText(items.get(position).getDescriptions().getEn());
         //new DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
     }

@@ -100,7 +100,7 @@ public class AnimeFragment extends Fragment implements
 
     private void initAdapter() {
         binding.rvAnimeList.setHasFixedSize(true);
-        //LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
+        //LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext(),2);
         //binding.rvAnimeList.setLayoutManager(gridLayoutManager);
         adapter = new AnimeAdapter(this);
         binding.rvAnimeList.addItemDecoration(

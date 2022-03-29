@@ -14,5 +14,6 @@
     <string name="menu_user">User</string>
     <string name="Text_Welcome" >Welcome to my app Anime</string>
     <string name="Text_Button">Press me</string>
+    <string name="dabase_name">aniapproom</string>
 
 </resources>

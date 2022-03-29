@@ -1,12 +1,19 @@
 package org.jbtc.aniapp.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
 
 @Data
+@Entity
 public class Anime {
+    @PrimaryKey(autoGenerate = true)
+    public long id_anime;
+
 
     public int getId() {
         return id;
@@ -56,37 +63,7 @@ public class Anime {
         this.status = status;
     }
 
-    public Titles getTitles() {
-        return titles;
-    }
 
-    public void setTitles(Titles titles) {
-        this.titles = titles;
-    }
-
-    public Descriptions getDescriptions() {
-        return descriptions;
-    }
-
-    public void setDescriptions(Descriptions descriptions) {
-        this.descriptions = descriptions;
-    }
-
-    public Date getStart_date() {
-        return start_date;
-    }
-
-    public void setStart_date(Date start_date) {
-        this.start_date = start_date;
-    }
-
-    public Date getEnd_date() {
-        return end_date;
-    }
-
-    public void setEnd_date(Date end_date) {
-        this.end_date = end_date;
-    }
 
     public byte getWeekly_airing_day() {
         return weekly_airing_day;
@@ -152,22 +129,6 @@ public class Anime {
         this.banner_image = banner_image;
     }
 
-    public List<String> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(List<String> genres) {
-        this.genres = genres;
-    }
-
-    public List<Sagas> getSagas() {
-        return sagas;
-    }
-
-    public void setSagas(List<Sagas> sagas) {
-        this.sagas = sagas;
-    }
-
     public int getSequel() {
         return sequel;
     }
@@ -222,10 +183,10 @@ public class Anime {
     private int tmdb_id;
     private byte format;
     private byte status;
-    private Titles titles;
-    private Descriptions descriptions;
-    private Date start_date;
-    private Date end_date;
+    //private Titles titles;
+    //private Descriptions descriptions;
+    //private Date start_date;
+    //private Date end_date;
     private byte weekly_airing_day;
     private byte season_period;
     private int season_year;
@@ -234,8 +195,8 @@ public class Anime {
     private String cover_image;
     private String cover_color;
     private String banner_image;
-    private List<String> genres;
-    private List<Sagas> sagas;
+    //private List<String> genres;
+    //private List<Sagas> sagas;
     private int sequel;
     private int prequel;
     private float score;
@@ -243,4 +204,39 @@ public class Anime {
     private String trailer_url;
     private boolean has_cover_image;
 
+    public String getFormatToString() {
+        switch (format){
+            case 0: return "TV";
+            case 1: return "TV_SHORT";
+            case 2: return "MOVIE";
+            case 3: return "SPECIAL";
+            case 4: return "OVA";
+            case 5: return "ONA";
+            case 6: return "MUSIC";
+            default: return "NULL";
+        }
+    }
+
+    public String getWeekly_airing_dayToString() {
+        switch (format){
+            case 0: return "Sunday";
+            case 1: return "Monday";
+            case 2: return "Tuesday";
+            case 3: return "Wednesday";
+            case 4: return "Thursday";
+            case 5: return "Friday";
+            case 6: return "Saturday";
+            default: return "NULL";
+        }
+    }
+
+    public String getStatusToString() {
+        switch (format){
+            case 0: return "FINISHED";
+            case 1: return "RELEASING";
+            case 2: return "NOT_YET_RELEASED";
+            case 3: return "CANCELLED";
+            default: return "NULL";
+        }
+    }
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.Menu;
 
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonObject;
@@ -33,6 +34,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = "SLAJF";
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -121,6 +123,18 @@ public class MainActivity extends AppCompatActivity {
             binding.appBarMain.ivCollToolCont.setImageDrawable(null);
         }catch (Exception e){
             Log.e("TAG", "setDisplayShowTitleEnabled: ",e);
+        }
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+        //super.setTitle(titleId);
+        try {
+            CollapsingToolbarLayout coll = findViewById(R.id.coll_toolbar_layout_main);
+            coll.setTitle(title);
+            //binding.appBarMain.collToolbarLayoutMain.setTitle(title);
+        }catch (Exception e){
+            Log.e(TAG, "setTitle: ", e);
         }
     }
 
