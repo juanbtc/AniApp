@@ -12,18 +12,14 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
-import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.adapter.AnimeAdapter;
 import org.jbtc.aniapp.adapter.UserAdapter;
-import org.jbtc.aniapp.component.PaginationFragment;
 import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.contract.UserService;
 import org.jbtc.aniapp.databinding.FragmentUserBinding;
 import org.jbtc.aniapp.model.RespuestaAnimes;
 import org.jbtc.aniapp.model.RespuestaUser;
 import org.jbtc.aniapp.model.RespuestaUsers;
-import org.jbtc.aniapp.model.User;
-import org.jbtc.aniapp.provider.AniApiProvider;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,27 +27,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class UserFragment  extends Fragment implements  PaginationFragment.OnClickCallback{
+public class UserFragment  extends Fragment {
     FragmentUserBinding binding;
     private UserAdapter adapter;
-    private int page=0;
-    private int total_page=0;
-
-    private Callback<RespuestaUsers> callUsers = new Callback<RespuestaUsers>() {
-        @Override
-        public void onResponse(Call<RespuestaUsers> call, Response<RespuestaUsers> response) {
-            if(response.isSuccessful())
-                adapter.setItems(response.body().getData().getDocuments());
-            page = response.body().getData().getCurrent_page();
-            total_page = response.body().getData().getLast_page();
-            PaginationFragment paginationFragment = (PaginationFragment) getChildFragmentManager().findFragmentById(R.id.frag_user_pagination);
-            paginationFragment.setEnumeration(page,total_page);
-        }
-        @Override
-        public void onFailure(Call<RespuestaUsers> call, Throwable t) {
-            Log.e("TAG", "onFailure: ", t);
-        }
-    };
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -65,9 +43,8 @@ public class UserFragment  extends Fragment implements  PaginationFragment.OnCli
         super.onViewCreated(view, savedInstanceState);
 
         initAdapter();
-        PaginationFragment paginationFragment = (PaginationFragment) getChildFragmentManager().findFragmentById(R.id.frag_user_pagination);
-        paginationFragment.setOnClickCallback(this);
-        /*
+
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.aniapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -84,10 +61,7 @@ public class UserFragment  extends Fragment implements  PaginationFragment.OnCli
                 Log.e("TAG", "onFailure: ", t);
             }
         });
-      */
-        UserService userService = AniApiProvider.getInstance().create(UserService.class);
 
-        userService.getUsers(1).enqueue(callUsers);
 
     }
 
@@ -95,7 +69,7 @@ public class UserFragment  extends Fragment implements  PaginationFragment.OnCli
         binding.rvUserList.setHasFixedSize(true);
         LinearLayoutManager gridLayoutManager = new LinearLayoutManager(getContext());
         binding.rvUserList.setLayoutManager(gridLayoutManager);
-        adapter = new UserAdapter(getContext());
+        adapter = new UserAdapter();
         binding.rvUserList.setAdapter(adapter);
     }
 
@@ -103,11 +77,5 @@ public class UserFragment  extends Fragment implements  PaginationFragment.OnCli
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    @Override
-    public void onClickPagination(int page) {
-        UserService userService = AniApiProvider.getInstance().create(UserService.class);
-        userService.getUsers(page).enqueue(callUsers);
     }
 }

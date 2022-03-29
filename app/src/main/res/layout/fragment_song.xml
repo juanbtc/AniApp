@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".ui.song.SongFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_song_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
         tools:listitem="@layout/cardview_song"/>
-    <fragment
-        android:id="@+id/frag_song_pagination"
-        android:name="org.jbtc.aniapp.component.PaginationFragment"
-        class="org.jbtc.aniapp.component.PaginationFragment"
-        tools:layout="@layout/fragment_pagination"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

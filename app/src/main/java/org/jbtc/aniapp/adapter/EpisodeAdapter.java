@@ -50,7 +50,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
         Log.i("TAG", "onBindViewHolder: se ejecuto el on bind");
         holder.name.setText( items.get(position).getTitle());
         int numero=items.get(position).getNumber();
-       holder.number.setText(item.getTitles().getEn());
+        holder.number.setText(item.getTitles().getEn());
         holder.video.loadUrl(items.get(position).getVideo());
        // new EpisodeViewHolder.DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
 

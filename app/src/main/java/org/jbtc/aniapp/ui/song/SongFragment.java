@@ -13,17 +13,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.adapter.AnimeAdapter;
 import org.jbtc.aniapp.adapter.SongAdapter;
-import org.jbtc.aniapp.component.PaginationFragment;
 import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.contract.SongService;
 import org.jbtc.aniapp.databinding.FragmentSongBinding;
 import org.jbtc.aniapp.model.RespuestaAnimes;
 import org.jbtc.aniapp.model.RespuestaSongs;
 import org.jbtc.aniapp.model.Song;
-import org.jbtc.aniapp.provider.AniApiProvider;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,28 +28,10 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class SongFragment extends Fragment implements PaginationFragment.OnClickCallback {
+public class SongFragment extends Fragment {
 
     private FragmentSongBinding binding;
     private SongAdapter adapter;
-    private int page=0;
-    private int total_page=0;
-    private Callback<RespuestaSongs> callSongs = new Callback<RespuestaSongs>() {
-        @Override
-        public void onResponse(Call<RespuestaSongs> call, Response<RespuestaSongs> response) {
-            if(response.isSuccessful())
-                adapter.setItems(response.body().getData().getDocuments());
-            page = response.body().getData().getCurrent_page();
-            total_page = response.body().getData().getLast_page();
-            PaginationFragment paginationFragment = (PaginationFragment) getChildFragmentManager().findFragmentById(R.id.frag_song_pagination);
-            paginationFragment.setEnumeration(page,total_page);
-        }
-        @Override
-        public void onFailure(Call<RespuestaSongs> call, Throwable t) {
-            Log.e("TAG", "onFailure: ", t);
-        }
-    };
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SongViewModel songViewModel =
@@ -71,10 +50,8 @@ public class SongFragment extends Fragment implements PaginationFragment.OnClick
 
         initAdapter();
 
-        PaginationFragment paginationFragment = (PaginationFragment) getChildFragmentManager().findFragmentById(R.id.frag_song_pagination);
-        paginationFragment.setOnClickCallback(this);
 
-       /* Retrofit retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://api.aniapi.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
@@ -90,10 +67,8 @@ public class SongFragment extends Fragment implements PaginationFragment.OnClick
                 Log.e("TAG", "onFailure: ", t);
             }
         });
-       */
-        SongService songService = AniApiProvider.getInstance().create(SongService.class);
 
-        songService.getSongs(1).enqueue(callSongs);
+
     }
 
     private void initAdapter() {
@@ -108,11 +83,5 @@ public class SongFragment extends Fragment implements PaginationFragment.OnClick
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
-    }
-
-    @Override
-    public void onClickPagination(int page) {
-        SongService songService = AniApiProvider.getInstance().create(SongService.class);
-        songService.getSongs(page).enqueue(callSongs);
     }
 }
