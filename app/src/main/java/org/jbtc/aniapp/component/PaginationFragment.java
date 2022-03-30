@@ -93,6 +93,7 @@ public class PaginationFragment extends Fragment {
                 et.setBackgroundTintList(null);
                 //et.setBackground(getResources().getDrawable(R.drawable.bg_btn_pagination));
                 //et.setBackground(getResources().getDrawable(R.drawable.bg_btn_pagination));
+                et.setBackgroundColor(getResources().getColor(R.color.white));
             }
         }
 

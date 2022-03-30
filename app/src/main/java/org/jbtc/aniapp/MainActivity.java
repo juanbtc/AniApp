@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
-
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonObject;
 
 import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -31,7 +33,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String TAG = "SLAJF";
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
+        setSupportActionBar(binding.appBarMain.toolbarMain);
+
         /*binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,6 +119,48 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+ /*public void loadImgToolbar(String src_img) {
+        Picasso.get()
+                .load(src_img)
+                .into(binding.appBarMain.ivCollToolCont);
+    }*/
+
+    public void setDisplayShowTitleEnabled(boolean enabled, boolean lockBar){
+        try {
+            CoordinatorLayout.LayoutParams params=null;
+            if(lockBar)
+                params = new CoordinatorLayout.LayoutParams(
+                        CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                        CoordinatorLayout.LayoutParams.WRAP_CONTENT
+                );
+            else
+                params = new CoordinatorLayout.LayoutParams(
+                        CoordinatorLayout.LayoutParams.MATCH_PARENT,
+                        getResources().getDimensionPixelSize(R.dimen.app_bar_height)
+                );
+            AppBarLayout appBar = findViewById(R.id.Appbar_layout_main);
+            appBar.setLayoutParams(params);
+            //binding.appBarMain.AppbarLayoutMain.setLayoutParams(params);
+
+
+            binding.appBarMain.collToolbarLayoutMain.setTitleEnabled(enabled);
+            /*siempre tiene anular la imagen por que cambia de pantalla*/
+            binding.appBarMain.ivCollToolCont.setImageDrawable(null);
+        }catch (Exception e){
+            Log.e("TAG", "setDisplayShowTitleEnabled: ",e);
+        }
+    }
+    @Override
+    public void setTitle(CharSequence title) {
+        //super.setTitle(titleId);
+        try {
+            CollapsingToolbarLayout coll = findViewById(R.id.coll_toolbar_layout_main);
+            coll.setTitle(title);
+            //binding.appBarMain.collToolbarLayoutMain.setTitle(title);
+        }catch (Exception e){
+            Log.e(TAG, "setTitle: ", e);
+        }
     }
 
     @Override
