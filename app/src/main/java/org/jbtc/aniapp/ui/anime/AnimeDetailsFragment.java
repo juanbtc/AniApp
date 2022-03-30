@@ -37,7 +37,7 @@ public class AnimeDetailsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentAnimeDetailsBinding.inflate(inflater,container,false);
         bindingAppBar= AppBarMainBinding.inflate(inflater,container,false);
-        return bindingAppBar.getRoot();
+        return binding.getRoot();
     }
 
     @Override
