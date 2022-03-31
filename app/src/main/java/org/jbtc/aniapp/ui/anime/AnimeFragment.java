@@ -20,11 +20,14 @@ import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.adapter.AnimeAdapter;
 import org.jbtc.aniapp.component.PaginationFragment;
 import org.jbtc.aniapp.contract.AnimeService;
+import org.jbtc.aniapp.database.AniApiRoom;
 import org.jbtc.aniapp.databinding.FragmentAnimeBinding;
 import org.jbtc.aniapp.model.Anime;
 import org.jbtc.aniapp.model.RespuestaAnimes;
 import org.jbtc.aniapp.provider.AniApiProvider;
 import org.jbtc.aniapp.utils.RecyclerItemDecoration;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -87,15 +90,46 @@ public class AnimeFragment extends Fragment implements
         PaginationFragment paginationFragment = (PaginationFragment) getChildFragmentManager().findFragmentById(R.id.frag_anime_pagination);
         paginationFragment.setOnClickCallback(this);
 
-        /*Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://api.aniapi.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();*/
+
         AnimeService animeService = AniApiProvider.getInstance().create(AnimeService.class);
 
-        animeService.getAnimes(1).enqueue(callAnimes);
+        //animeService.getAnimes(1).enqueue(callAnimes);
+
+        System.out.println("Hilo actual: "+Thread.currentThread().getName());
 
 
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Hilo actual: "+Thread.currentThread().getName());
+                //int r = procesamiento();
+                List<Anime> a = AniApiRoom.getInstance(getContext()).animeDao().getAll();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("Hilo actual: "+Thread.currentThread().getName());
+                        System.out.println("animes: "+a);
+                        //System.out.println("resultado: "+r);
+                    }
+                });
+            }
+        });
+        t.start();
+
+
+    }
+
+    private int procesamiento() {
+        int suma=0;
+            System.out.println("inicio");
+
+        for (int i=0;i<200000000;i++)
+            suma+=i;
+
+            System.out.println("termino");
+        return suma;
     }
 
     private void initAdapter() {

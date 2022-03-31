@@ -22,7 +22,6 @@ public interface AnimeService {
     @GET("v1/anime/{id}")
     Call<RespuestaAnime> getAnime(@Path("id") int id);
 
-
     @GET("v1/anime/?per_page="+10)
     Call<RespuestaAnimes> getAnimes(@Query("page") int page);
 

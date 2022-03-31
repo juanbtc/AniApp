@@ -20,7 +20,7 @@ public abstract class AniApiRoom extends RoomDatabase {
                 if(INSTANCE==null){
                     INSTANCE = Room.databaseBuilder(contexto.getApplicationContext(),
                             AniApiRoom.class,contexto.getResources().getString(R.string.dabase_name))
-                            .allowMainThreadQueries()
+                            //.allowMainThreadQueries()
                             .build();
                 }
             }

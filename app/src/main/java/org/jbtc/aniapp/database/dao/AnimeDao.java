@@ -8,6 +8,8 @@ import org.jbtc.aniapp.model.Anime;
 
 import java.util.List;
 
+import io.reactivex.Single;
+
 @Dao
 public interface AnimeDao {
     @Query("SELECT * FROM Anime")
