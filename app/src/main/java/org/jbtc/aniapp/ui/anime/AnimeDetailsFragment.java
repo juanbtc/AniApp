@@ -53,9 +53,9 @@ public class AnimeDetailsFragment extends Fragment {
             animeService.getAnime(id).enqueue(new Callback<RespuestaAnime>() {
                 @Override
                 public void onResponse(Call<RespuestaAnime> call, Response<RespuestaAnime> response) {
-                    AniApiRoom.getInstance(getContext()).animeDao().insertAnime(response.body().getData());
-                    List<Anime> a = AniApiRoom.getInstance(getContext()).animeDao().getAll();
-                    System.out.println("animes: "+a);
+                    //AniApiRoom.getInstance(getContext()).animeDao().insertAnime(response.body().getData());
+                    //List<Anime> a = AniApiRoom.getInstance(getContext()).animeDao().getAll();
+                    //System.out.println("animes: "+a);
 
                     setAnimeToLayout(response.body().getData());
                 }

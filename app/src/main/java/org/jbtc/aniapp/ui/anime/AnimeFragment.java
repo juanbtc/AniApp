@@ -21,6 +21,7 @@ import org.jbtc.aniapp.adapter.AnimeAdapter;
 import org.jbtc.aniapp.component.PaginationFragment;
 import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.database.AniApiRoom;
+import org.jbtc.aniapp.database.viewmodel.AnimeViewModel;
 import org.jbtc.aniapp.databinding.FragmentAnimeBinding;
 import org.jbtc.aniapp.model.Anime;
 import org.jbtc.aniapp.model.RespuestaAnimes;
@@ -29,6 +30,11 @@ import org.jbtc.aniapp.utils.RecyclerItemDecoration;
 
 import java.util.List;
 
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiConsumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -42,6 +48,8 @@ public class AnimeFragment extends Fragment implements
 
     private FragmentAnimeBinding binding;
     private AnimeAdapter adapter;
+
+    private AnimeViewModel animeViewModel;
 
     private int page=0;
     private int total_page=0;
@@ -84,6 +92,8 @@ public class AnimeFragment extends Fragment implements
 
         initAdapter();
 
+        animeViewModel = new ViewModelProvider(requireActivity()).get(AnimeViewModel.class);
+
         ( (MainActivity)getActivity() ).setDisplayShowTitleEnabled(false,true);
         ( (MainActivity)getActivity() ).setTitle(getResources().getString(R.string.menu_anime));
 
@@ -93,13 +103,33 @@ public class AnimeFragment extends Fragment implements
 
         AnimeService animeService = AniApiProvider.getInstance().create(AnimeService.class);
 
-        //animeService.getAnimes(1).enqueue(callAnimes);
+        animeService.getAnimes(1).enqueue(callAnimes);
 
         System.out.println("Hilo actual: "+Thread.currentThread().getName());
 
+        animeViewModel.getAnimes()
+                .subscribe((animes, throwable) -> {
+                    System.out.println("animes: "+animes);
+                });
+
+        /*
+        AniApiRoom.getInstance(getContext()).animeDao().getAnimes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BiConsumer<List<Anime>, Throwable>() {
+                    @Override
+                    public void accept(List<Anime> animes, Throwable throwable) throws Exception {
+                        if(throwable==null){
+                            System.out.println("animes: "+animes);
+                        }
+                    }
+                });
+        */
 
 
-        Thread t = new Thread(new Runnable() {
+
+
+        /*Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
                 System.out.println("Hilo actual: "+Thread.currentThread().getName());
@@ -117,6 +147,7 @@ public class AnimeFragment extends Fragment implements
             }
         });
         t.start();
+        */
 
 
     }
