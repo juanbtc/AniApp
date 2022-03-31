@@ -18,9 +18,9 @@ public class Anime {
     private byte format;
     private byte status;
    /* private Titles titles;
-    private Descriptions descriptions;
+    private Descriptions descriptions;*/
     private Date start_date;
-    private Date end_date;*/
+    private Date end_date;
     private byte weekly_airing_day;
     private byte season_period;
     private int season_year;

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -20,16 +19,23 @@ import org.jbtc.aniapp.adapter.AnimeAdapter;
 import org.jbtc.aniapp.component.PaginationFragment;
 import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.databinding.FragmentAnimeBinding;
+import org.jbtc.aniapp.database.AniApiRoom;
 import org.jbtc.aniapp.model.Anime;
+import org.jbtc.aniapp.database.viewmodel.AnimeViewModel;
 import org.jbtc.aniapp.model.RespuestaAnimes;
 import org.jbtc.aniapp.provider.AniApiProvider;
 import org.jbtc.aniapp.utils.RecyclerItemDecoration;
+import java.util.List;
+import io.reactivex.SingleObserver;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiConsumer;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 
 public class AnimeFragment extends Fragment implements
         AnimeAdapter.OnClick,
@@ -40,6 +46,7 @@ public class AnimeFragment extends Fragment implements
 
     private int page=0;
     private int total_page=0;
+    private AnimeViewModel animeViewModel;
 
 
 
@@ -78,6 +85,7 @@ public class AnimeFragment extends Fragment implements
         super.onViewCreated(view, savedInstanceState);
 
         initAdapter();
+        animeViewModel = new ViewModelProvider(requireActivity()).get(AnimeViewModel.class);
 
         ( (MainActivity)getActivity() ).setDisplayShowTitleEnabled(false,true);
         ( (MainActivity)getActivity() ).setTitle(getResources().getString(R.string.menu_anime));
@@ -92,8 +100,58 @@ public class AnimeFragment extends Fragment implements
 
         animeService.getAnimes(1).enqueue(callAnimes);
 
+        System.out.println("Hilo actual: "+Thread.currentThread().getName());
+        animeViewModel.getAnimes()
+                .subscribe((animes, throwable) -> {
+                    System.out.println("animes: "+animes);
+                });
+
+        /*
+        AniApiRoom.getInstance(getContext()).animeDao().getAnimes()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BiConsumer<List<Anime>, Throwable>() {
+                    @Override
+                    public void accept(List<Anime> animes, Throwable throwable) throws Exception {
+                        if(throwable==null){
+                            System.out.println("animes: "+animes);
+                        }
+                    }
+                });
+        */
 
 
+/*        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("Hilo actual: "+Thread.currentThread().getName());
+                //int r = procesamiento();
+                List<Anime> a = AniApiRoom.getInstance(getContext()).animeDao().getAll();
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        System.out.println("Hilo actual: "+Thread.currentThread().getName());
+                        System.out.println("animes: "+a);
+                        //System.out.println("resultado: "+r);
+                    }
+                });
+            }
+        });
+        t.start();
+
+*/
+
+    }
+    private int procesamiento() {
+        int suma=0;
+        System.out.println("inicio");
+
+        for (int i=0;i<200000000;i++)
+            suma+=i;
+
+        System.out.println("termino");
+        return suma;
     }
 
     private void initAdapter() {

@@ -1,4 +1,4 @@
-package org.jbtc.aniapp.ui.anime;
+/*package org.jbtc.aniapp.ui.anime;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -116,3 +116,4 @@ public class AnimeAppBarMain extends Fragment {
         binding=null;
     }
 }
+*/
