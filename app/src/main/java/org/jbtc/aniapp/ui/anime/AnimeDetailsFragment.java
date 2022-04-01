@@ -90,15 +90,15 @@ public class AnimeDetailsFragment extends Fragment {
     }
     private void setAnimeToLayout(Anime anime){
 
-        //getActivity().setTitle(anime.getTitles().getEn());
+        getActivity().setTitle(anime.getTitles().getEn());
 
         //getMainActivity().setDisplayShowTitleEnabled(true,false);
         //getMainActivity().setTitle(anime.getTitles().getEn());
         //getMainActivity().setExpandedAppbar(true);
          Log.i(TAG, "setAnimeToLayout: Anime: "+anime);
 
-        //binding.tvDetailsAnimeTitle.setText(anime.getTitles().getEn());
-        //binding.tvDetailsAnimeDescription.setText(Html.fromHtml(anime.getDescriptions().getEn()));
+        binding.tvDetailsAnimeTitle.setText(anime.getTitles().getEn());
+        binding.tvDetailsAnimeDescription.setText(Html.fromHtml(anime.getDescriptions().getEn()));
         //getMainActivity().loadImgToolbar(anime.getBanner_image());
 
         if(anime.getBanner_image()!=null){
@@ -112,24 +112,24 @@ public class AnimeDetailsFragment extends Fragment {
 
 
         binding.tvDetailsAnimeCalification.setText(anime.getScore()+"%");
-        //Log.i(TAG, "setAnimeToLayout: generos"+anime.getGenres() );
+        Log.i(TAG, "setAnimeToLayout: generos"+anime.getGenres() );
         String generos="";
-        //for (String genero : anime.getGenres()){
-        //    generos+=genero+", ";
-        //}StringBuffer g = new StringBuffer(generos);
-        //g.deleteCharAt(g.length()-1);
-        //g.deleteCharAt(g.length()-1);
-        //binding.tvDetailsAnimeGeneros.setText(g);
+        for (String genero : anime.getGenres()){
+            generos+=genero+", ";
+        }StringBuffer g = new StringBuffer(generos);
+        g.deleteCharAt(g.length()-1);
+        g.deleteCharAt(g.length()-1);
+        binding.tvDetailsAnimeGeneros.setText(g);
 
 
         binding.tvDetailsAnimeFormat.setText( anime.getFormatToString() );
         binding.tvDetailsAnimeDiaEmision.setText( anime.getWeekly_airing_dayToString() );
-        //binding.tvDetailsAnimeDateInit.setText(anime.getStart_date().toString());
-        //binding.tvDetailsAnimeDateEnd.setText(anime.getEnd_date().toString());
+        binding.tvDetailsAnimeDateInit.setText(anime.getStart_date().toString());
+        binding.tvDetailsAnimeDateEnd.setText(anime.getEnd_date().toString());
         binding.tvDetailsAnimeCountE.setText(anime.getEpisodes_count()+" Episodios");
         System.out.println("val: "+anime.getSeason_period());
         binding.tvDetailsAnimeTemporada.setText(String.valueOf( anime.getSeason_period() ));
-        //anime.getSagas()
+        anime.getSagas();
         binding.tvDetailsAnimeStatus.setText( anime.getStatusToString() );
         binding.tvDetailsAnimeTrailer.setText(anime.getTrailer_url());
     }

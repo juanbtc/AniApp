@@ -48,9 +48,15 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
     @Override
     public void onBindViewHolder(@NonNull EpisodeViewHolder holder, int position) {
         Log.i("TAG", "onBindViewHolder: se ejecuto el on bind");
-        holder.name.setText( items.get(position).getTitle());
+        holder.name.setText(items.get(position).getTitle());
         int numero=items.get(position).getNumber();
-        holder.number.setText(item.getTitles().getEn());
+        if(item.getTitles().getEn()!=null || item!=null || item.id_anime>0){
+        holder.number.setText(item.getTitles().getEn());}
+        else {
+            holder.number.setText(R.string.menu_anime);
+        }
+
+
         holder.video.loadUrl(items.get(position).getVideo());
        // new EpisodeViewHolder.DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
 

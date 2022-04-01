@@ -106,6 +106,7 @@ public class EpisodeFragment extends Fragment implements
         else{
 
             episodeService.getEpisodes(1).enqueue(callEpisodes);
+            animeService.getAnime(1).enqueue(callAnime);
         }
 
 
@@ -130,6 +131,8 @@ public class EpisodeFragment extends Fragment implements
     @Override
     public void onClickPagination(int page) {
         EpisodeService episodeService = AniApiProvider.getInstance().create(EpisodeService.class);
+        AnimeService animeService= AniApiProvider.getInstance().create(AnimeService.class);
+
         Bundle b = getArguments();
         if(b!=null){
             int id = b.getInt("id",0);
@@ -138,6 +141,8 @@ public class EpisodeFragment extends Fragment implements
         else{
 
             episodeService.getEpisodes(page).enqueue(callEpisodes);
+            animeService.getAnime(1).enqueue(callAnime);
+
         }
     }
 }
