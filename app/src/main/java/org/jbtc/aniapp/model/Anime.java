@@ -1,6 +1,13 @@
 package org.jbtc.aniapp.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import org.jbtc.aniapp.database.converter.DescriptionsConverter;
+import org.jbtc.aniapp.database.converter.GenresConverter;
+import org.jbtc.aniapp.database.converter.SagasConverter;
+import org.jbtc.aniapp.database.converter.TitlesConverter;
+
 import java.util.Date;
 import java.util.List;
 
@@ -17,8 +24,11 @@ public class Anime {
     private int tmdb_id;
     private byte format;
     private byte status;
-   /* private Titles titles;
-    private Descriptions descriptions;*/
+    @TypeConverters(TitlesConverter.class)
+    private Titles titles;
+    @TypeConverters(DescriptionsConverter.class)
+    private Descriptions descriptions;
+
     private Date start_date;
     private Date end_date;
     private byte weekly_airing_day;
@@ -29,8 +39,10 @@ public class Anime {
     private String cover_image;
     private String cover_color;
     private String banner_image;
-    /*private List<String> genres;
-    private List<Sagas> sagas;*/
+    @TypeConverters(GenresConverter.class)
+    private List<String> genres;
+    @TypeConverters(SagasConverter.class)
+    private List<Sagas> sagas;
     private int sequel;
     private int prequel;
     private float score;

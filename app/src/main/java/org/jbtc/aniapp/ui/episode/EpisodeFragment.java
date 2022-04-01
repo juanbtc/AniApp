@@ -94,11 +94,22 @@ public class EpisodeFragment extends Fragment implements
                 .build();
             */
 
-        EpisodeService episodeService = AniApiProvider.getInstance().create(EpisodeService.class);
-         episodeService.getEpisodes(1).enqueue(callEpisodes);
-        AnimeService animeService= AniApiProvider.getInstance().create(AnimeService.class);
 
-        animeService.getAnime(1).enqueue(callAnime);
+        EpisodeService episodeService = AniApiProvider.getInstance().create(EpisodeService.class);
+        AnimeService animeService= AniApiProvider.getInstance().create(AnimeService.class);
+        Bundle b = getArguments();
+        if(b!=null){
+            int id = b.getInt("id",0);
+         episodeService.getEpisodesByAnimeId(id,1).enqueue(callEpisodes);
+            animeService.getAnime(id).enqueue(callAnime);
+        }
+        else{
+
+            episodeService.getEpisodes(1).enqueue(callEpisodes);
+        }
+
+
+
     }
 
 
@@ -119,6 +130,14 @@ public class EpisodeFragment extends Fragment implements
     @Override
     public void onClickPagination(int page) {
         EpisodeService episodeService = AniApiProvider.getInstance().create(EpisodeService.class);
-        episodeService.getEpisodes(page).enqueue(callEpisodes);
+        Bundle b = getArguments();
+        if(b!=null){
+            int id = b.getInt("id",0);
+            episodeService.getEpisodesByAnimeId(id,page).enqueue(callEpisodes);
+        }
+        else{
+
+            episodeService.getEpisodes(page).enqueue(callEpisodes);
+        }
     }
 }

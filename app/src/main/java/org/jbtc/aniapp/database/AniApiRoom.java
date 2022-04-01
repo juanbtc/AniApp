@@ -7,11 +7,19 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import org.jbtc.aniapp.R;
+import org.jbtc.aniapp.database.converter.DescriptionsConverter;
+import org.jbtc.aniapp.database.converter.GenresConverter;
+import org.jbtc.aniapp.database.converter.SagasConverter;
+import org.jbtc.aniapp.database.converter.TitlesConverter;
 import org.jbtc.aniapp.database.dao.AnimeDao;
 import org.jbtc.aniapp.database.converter.DateLongConverter;
 
 import org.jbtc.aniapp.model.Anime;
-@TypeConverters({DateLongConverter.class})
+@TypeConverters({DateLongConverter.class,
+                 TitlesConverter.class,
+                 DescriptionsConverter.class,
+                 GenresConverter.class,
+                 SagasConverter.class})
 @Database(entities = {Anime.class}, version = 1,exportSchema = false)
 public abstract class AniApiRoom extends RoomDatabase {
 

@@ -38,7 +38,12 @@
         android:id="@+id/nav_anime_detail"
         android:name="org.jbtc.aniapp.ui.anime.AnimeDetailsFragment"
         android:label=""
-        tools:layout="@layout/fragment_anime_details" />
+        tools:layout="@layout/fragment_anime_details">
+        <action
+            android:id="@+id/action_nav_anime_detail_to_nav_episode"
+            app:destination="@id/nav_episode" />
+
+        </fragment>
 
 
 </navigation>

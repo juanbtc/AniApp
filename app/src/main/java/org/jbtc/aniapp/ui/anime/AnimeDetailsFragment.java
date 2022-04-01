@@ -11,16 +11,21 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.squareup.picasso.Picasso;
 import org.jbtc.aniapp.MainActivity;
 import org.jbtc.aniapp.R;
 import org.jbtc.aniapp.contract.AnimeService;
+import org.jbtc.aniapp.contract.EpisodeService;
 import org.jbtc.aniapp.database.AniApiRoom;
 import org.jbtc.aniapp.databinding.AppBarMainBinding;
 import org.jbtc.aniapp.databinding.FragmentAnimeDetailsBinding;
 import org.jbtc.aniapp.model.Anime;
 import org.jbtc.aniapp.model.RespuestaAnime;
+import org.jbtc.aniapp.model.RespuestaEpisodes;
 import org.jbtc.aniapp.provider.AniApiProvider;
+import org.jbtc.aniapp.ui.episode.EpisodeFragment;
 
 import java.util.List;
 
@@ -64,6 +69,23 @@ public class AnimeDetailsFragment extends Fragment {
 
                 }
             });
+            binding.btnDetailsAnimeEpisodes.setOnClickListener((View v)->{
+                EpisodeService episodeService= AniApiProvider.getInstance().create(EpisodeService.class);
+                episodeService.getEpisodesByAnimeId(id,1).enqueue(new Callback<RespuestaEpisodes>() {
+                    @Override
+                    public void onResponse(Call<RespuestaEpisodes> call, Response<RespuestaEpisodes> response) {
+
+                        NavHostFragment.findNavController(getParentFragment())
+                                .navigate(R.id.action_nav_anime_detail_to_nav_episode,b);
+                    }
+
+                    @Override
+                    public void onFailure(Call<RespuestaEpisodes> call, Throwable t) {
+
+                    }
+                });
+            });
+
         }
     }
     private void setAnimeToLayout(Anime anime){

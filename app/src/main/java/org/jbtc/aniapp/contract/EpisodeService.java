@@ -20,6 +20,8 @@ public interface EpisodeService {
     //@GET("v1/episode?anime_id=3&is_dub=true&locale=it")
     @GET("v1/episode/?per_page="+10)
     Call<RespuestaEpisodes> getEpisodes(@Query("page") int page);
+    @GET("v1/episode/?anime_id="+1+"&per_page="+10)
+    Call<RespuestaEpisodes>getEpisodesByAnimeId(@Query("id") int id,@Query("page") int page);
 
     @GET("v1/auth/me")
     Call<JsonObject> autenticacion(@Header("Authorization") String jwt);
