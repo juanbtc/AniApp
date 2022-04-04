@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel;
 
 import org.jbtc.aniapp.database.AniApiRoom;
 import org.jbtc.aniapp.database.dao.AnimeDao;
+import org.jbtc.aniapp.database.entity.DescriptionsAndAnime;
 import org.jbtc.aniapp.model.Anime;
 
 import java.util.List;
@@ -62,6 +63,12 @@ public class AnimeViewModel extends AndroidViewModel {
 
     public Single<Integer> deleteAnime(Anime anime){
         return animeDao.deleteAnime(anime)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    public Single<List<DescriptionsAndAnime>> getDescriptionsAndAnime(){
+        return animeDao.getDescriptionsAndAnime()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

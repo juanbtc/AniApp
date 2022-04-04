@@ -1,9 +1,16 @@
 package org.jbtc.aniapp.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import lombok.Data;
 
 @Data
+@Entity
 public class Descriptions {
+    @PrimaryKey(autoGenerate = true)
+    public long id;
+
     private String en;
     private String fr;
     private String it;

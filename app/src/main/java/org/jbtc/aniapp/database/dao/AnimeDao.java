@@ -4,8 +4,10 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
+import org.jbtc.aniapp.database.entity.DescriptionsAndAnime;
 import org.jbtc.aniapp.model.Anime;
 
 import java.util.List;
@@ -43,4 +45,8 @@ public interface AnimeDao {
     Single<Integer> deleteAnime(Anime anime);
     @Query("delete from Anime")
     Single<Integer> clearAnime();
+
+    @Transaction
+    @Query("SELECT * FROM Descriptions")
+    public Single<List<DescriptionsAndAnime>> getDescriptionsAndAnime();
 }

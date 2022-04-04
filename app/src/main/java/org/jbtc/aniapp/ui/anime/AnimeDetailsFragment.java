@@ -10,12 +10,15 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.squareup.picasso.Picasso;
 
 import org.jbtc.aniapp.MainActivity;
+import org.jbtc.aniapp.component.Fragmento;
 import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.database.AniApiRoom;
+import org.jbtc.aniapp.database.viewmodel.AnimeViewModel;
 import org.jbtc.aniapp.databinding.FragmentAnimeDetailsBinding;
 import org.jbtc.aniapp.model.Anime;
 import org.jbtc.aniapp.model.RespuestaAnime;
@@ -27,9 +30,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AnimeDetailsFragment extends Fragment {
+public class AnimeDetailsFragment extends Fragmento {
     private static final String TAG = "SLFG";
     private FragmentAnimeDetailsBinding binding;
+    private AnimeViewModel animeViewModel;
+
 
     @Nullable
     @Override
@@ -42,6 +47,7 @@ public class AnimeDetailsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        animeViewModel = new ViewModelProvider(this).get(AnimeViewModel.class);
         ( (MainActivity)getActivity() ).setDisplayShowTitleEnabled(true,false);
 
 
@@ -70,33 +76,36 @@ public class AnimeDetailsFragment extends Fragment {
 
     private void setAnimeToLayout(Anime anime){
 
-        //getActivity().setTitle(anime.getTitles().getEn());
+        //animeViewModel.getDescriptionsAndAnime()
+                //.subscribe()
+
+        ((MainActivity)getActivity()).setTitle(anime.getTitles().getEn());
 
         //getMainActivity().setDisplayShowTitleEnabled(true,false);
-        //getMainActivity().setTitle(anime.getTitles().getEn());
+        getMainActivity().setTitle(anime.getTitles().getEn());
             //getMainActivity().setExpandedAppbar(true);
         Log.i(TAG, "setAnimeToLayout: Anime: "+anime);
 
-        //binding.tvDetailsAnimeTitle.setText(anime.getTitles().getEn());
+        binding.tvDetailsAnimeTitle.setText(anime.getTitles().getEn());
         //binding.tvDetailsAnimeDescription.setText(Html.fromHtml(anime.getDescriptions().getEn()));
-        //getMainActivity().loadImgToolbar(anime.getBanner_image());
+        getMainActivity().loadImgToolbar(anime.getBanner_image());
         Picasso.get().load(anime.getCover_image()).into(binding.ivDetailsAnimeCover);
 
         binding.tvDetailsAnimeCalification.setText(anime.getScore()+"%");
-        //Log.i(TAG, "setAnimeToLayout: generos"+anime.getGenres() );
+        Log.i(TAG, "setAnimeToLayout: generos"+anime.getGenres() );
         String generos="";
-        //for (String genero : anime.getGenres()){
-        //    generos+=genero+", ";
-        //}StringBuffer g = new StringBuffer(generos);
-        //g.deleteCharAt(g.length()-1);
-        //g.deleteCharAt(g.length()-1);
-        //binding.tvDetailsAnimeGeneros.setText(g);
+        for (String genero : anime.getGenres()){
+            generos+=genero+", ";
+        }StringBuffer g = new StringBuffer(generos);
+        g.deleteCharAt(g.length()-1);
+        g.deleteCharAt(g.length()-1);
+        binding.tvDetailsAnimeGeneros.setText(g);
 
 
         binding.tvDetailsAnimeFormat.setText( anime.getFormatToString() );
         binding.tvDetailsAnimeDiaEmision.setText( anime.getWeekly_airing_dayToString() );
-        //binding.tvDetailsAnimeDateInit.setText(anime.getStart_date().toString());
-        //binding.tvDetailsAnimeDateEnd.setText(anime.getEnd_date().toString());
+        binding.tvDetailsAnimeDateInit.setText(anime.getStart_date().toString());
+        binding.tvDetailsAnimeDateEnd.setText(anime.getEnd_date().toString());
         binding.tvDetailsAnimeCountE.setText(anime.getEpisodes_count()+" Episodios");
         System.out.println("val: "+anime.getSeason_period());
         binding.tvDetailsAnimeTemporada.setText(String.valueOf( anime.getSeason_period() ));

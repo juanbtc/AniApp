@@ -109,6 +109,7 @@ public class AnimeFragment extends Fragment implements
 
         animeViewModel.getAnimes()
                 .subscribe((animes, throwable) -> {
+
                     System.out.println("animes: "+animes);
                 });
 

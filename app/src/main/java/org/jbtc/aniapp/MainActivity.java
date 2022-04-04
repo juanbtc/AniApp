@@ -10,6 +10,7 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import androidx.annotation.NonNull;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
@@ -21,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.jbtc.aniapp.contract.AnimeService;
+import org.jbtc.aniapp.database.AniApiRoom;
 import org.jbtc.aniapp.databinding.ActivityMainBinding;
 
 import org.jbtc.aniapp.model.RespuestaAnimes;
@@ -70,6 +72,12 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+
+        binding.appBarMain.fab.setOnClickListener(view -> {
+            //AniApiRoom.getInstance(this).animeDao()
+                    //.insertAnime()
+        });
 
     }
 
@@ -137,6 +145,14 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "setTitle: ", e);
         }
     }
+
+    public void loadImgToolbar(String src_img) {
+        Picasso.get()
+                .load(src_img)
+                .into(binding.appBarMain.ivCollToolCont);
+    }
+
+
 
     @Override
     protected void onStart() {

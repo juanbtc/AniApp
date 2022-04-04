@@ -183,8 +183,9 @@ public class Anime {
     private int tmdb_id;
     private byte format;
     private byte status;
-    //private Titles titles;
+    private Titles titles;
     //private Descriptions descriptions;
+    public long descriptions_id;
     private Date start_date;
     private Date end_date;
     private byte weekly_airing_day;
@@ -195,8 +196,8 @@ public class Anime {
     private String cover_image;
     private String cover_color;
     private String banner_image;
-    //private List<String> genres;
-    //private List<Sagas> sagas;
+    private List<String> genres;
+    private List<Sagas> sagas;
     private int sequel;
     private int prequel;
     private float score;
