@@ -1,17 +1,15 @@
 package org.jbtc.aniapp.model;
 
+import com.google.gson.annotations.SerializedName;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-@Data @EqualsAndHashCode(callSuper=false)
+@Data @EqualsAndHashCode(callSuper=false) @NoArgsConstructor
 public class RespuestaAnime extends Respuesta{
-    private Anime data;
-    public Anime getData() {
-        return data;
-    }
-
-    public void setData(Anime data) {
-        this.data = data;
-    }
+    @SerializedName("data")
+    private Anime anime;
 }
 

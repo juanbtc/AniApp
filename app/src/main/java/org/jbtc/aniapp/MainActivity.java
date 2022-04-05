@@ -146,6 +146,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void setFabOnclickListener(View.OnClickListener onClickListener){
+        binding.appBarMain.fab.setOnClickListener(onClickListener);
+    }
+
+    public void setFabImageResource(int resId) {
+        binding.appBarMain.fab.setImageResource(resId);
+    }
+
+
     public void loadImgToolbar(String src_img) {
         Picasso.get()
                 .load(src_img)
@@ -153,34 +162,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i("TAG", "onStart: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i("TAG", "onResume: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i("TAG", "onPause: ");
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        Log.i("TAG", "onStop: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i("TAG", "onDestroy: ");
-    }
 }

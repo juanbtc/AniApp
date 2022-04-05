@@ -60,9 +60,9 @@ public class AnimeFragment extends Fragment implements
         @Override
         public void onResponse(Call<RespuestaAnimes> call, Response<RespuestaAnimes> response) {
             if(response.isSuccessful())
-                adapter.setItems(response.body().getData().getDocuments());
-            page = response.body().getData().getCurrent_page();
-            total_page = response.body().getData().getLast_page();
+                adapter.setItems(response.body().getAnimes().getDocuments());
+            page = response.body().getAnimes().getCurrent_page();
+            total_page = response.body().getAnimes().getLast_page();
             PaginationFragment paginationFragment = (PaginationFragment) getChildFragmentManager().findFragmentById(R.id.frag_anime_pagination);
             paginationFragment.setEnumeration(page,total_page);
         }

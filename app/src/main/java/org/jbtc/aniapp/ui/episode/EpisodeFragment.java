@@ -72,7 +72,7 @@ public class EpisodeFragment extends Fragment {
         animeService.getAnime(3).enqueue(new Callback<RespuestaAnime>() {
             @Override
             public void onResponse(Call<RespuestaAnime> call, Response<RespuestaAnime> response) {
-                adapter.setItem(response.body().getData());
+                adapter.setItem(response.body().getAnime());
             }
 
             @Override

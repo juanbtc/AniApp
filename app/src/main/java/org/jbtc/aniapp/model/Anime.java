@@ -14,6 +14,8 @@ public class Anime {
     @PrimaryKey(autoGenerate = true)
     public long id_anime;
 
+    public boolean favorite;
+
 
     public int getId() {
         return id;

@@ -26,6 +26,7 @@ import org.jbtc.aniapp.provider.AniApiProvider;
 
 import java.util.List;
 
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -56,22 +57,43 @@ public class AnimeDetailsFragment extends Fragmento {
         if(b!=null){
             int id = b.getInt("id",0);
             AnimeService animeService = AniApiProvider.getInstance().create(AnimeService.class);
-            animeService.getAnime(id).enqueue(new Callback<RespuestaAnime>() {
-                @Override
-                public void onResponse(Call<RespuestaAnime> call, Response<RespuestaAnime> response) {
-                    //AniApiRoom.getInstance(getContext()).animeDao().insertAnime(response.body().getData());
-                    //List<Anime> a = AniApiRoom.getInstance(getContext()).animeDao().getAll();
-                    //System.out.println("animes: "+a);
 
-                    setAnimeToLayout(response.body().getData());
-                }
+            if(id>0)
+                animeViewModel.getAnimeById(id)
+                    .doOnError(throwable -> {
+                        Log.e(TAG, "onViewCreated: error al obtener el anime mediante el id", throwable);
+                        animeService.getAnime(id)
+                                .enqueue(new Callback<RespuestaAnime>() {
+                                    @Override
+                                    public void onResponse(Call<RespuestaAnime> call, Response<RespuestaAnime> response) {
+                                        Log.i(TAG, "onViewCreated: se obtubo el anime desde la api");
+                                        setAnimeToLayout(response.body().getAnime());
 
-                @Override
-                public void onFailure(Call<RespuestaAnime> call, Throwable t) {
+                                            animeViewModel.insertAnime(response.body().getAnime())
+                                                .subscribe((id_anime, throwable1) -> {
+                                                        if(id_anime>0)
+                                                            Log.i(TAG, "onResponse: Anime insertado con exito");
+                                                        else
+                                                            Log.e(TAG, "onResponse: hubo un erro al insertar el anime", throwable1);
+                                                    });
+                                                }
+                                                @Override
+                                                public void onFailure(Call<RespuestaAnime> call, Throwable t) {
+                                                       Log.e(TAG, "onFailure: ", t);
+                                                                     }
+                                                });
+                                            })
+                    .flatMap(anime -> {
+                        Log.i(TAG, "onViewCreated: se obtubo el anime desde room");
+                        setAnimeToLayout(anime);
+                        return Single.just(1);
+                    }).subscribe((value, throwable) -> {
+                        if(throwable!=null)
+                            Log.e(TAG, "onViewCreated: error", throwable);
+                    });
 
-                }
-            });
         }
+
     }
 
     private void setAnimeToLayout(Anime anime){
@@ -85,6 +107,24 @@ public class AnimeDetailsFragment extends Fragmento {
         getMainActivity().setTitle(anime.getTitles().getEn());
             //getMainActivity().setExpandedAppbar(true);
         Log.i(TAG, "setAnimeToLayout: Anime: "+anime);
+
+        updateIconFab(anime);
+        getMainActivity().setFabOnclickListener(view -> {
+            if(anime.isFavorite())
+                anime.setFavorite(false);
+            else
+                anime.setFavorite(true);
+
+            animeViewModel.updateAnime(anime)
+                    .subscribe((integer, throwable) -> {
+                        if(integer>0){
+                            Log.i(TAG, "setAnimeToLayout: Anime actualizado en room");
+                            updateIconFab(anime);
+                        }
+                    });
+
+        });
+
 
         binding.tvDetailsAnimeTitle.setText(anime.getTitles().getEn());
         //binding.tvDetailsAnimeDescription.setText(Html.fromHtml(anime.getDescriptions().getEn()));
