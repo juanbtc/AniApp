@@ -39,6 +39,8 @@ public interface AnimeDao {
     Single<List<Anime>> getAnimes();
     @Query("select * from Anime")
     Observable<List<Anime>> getAnimesObs();
+    @Query("select * from Anime where favorite=1")
+    Single<List<Anime>> getAnimesFavoritos();
 
     //  UPDATE
     @Update

@@ -18,6 +18,8 @@ import lombok.Data;
 public class Anime {
     @PrimaryKey(autoGenerate = true)
     public long id_anime;
+    public boolean favorite;
+
     private int id;
     private int anilist_id;
     private int mal_id;

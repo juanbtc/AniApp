@@ -64,7 +64,7 @@ public class EpisodeFragment extends Fragment implements
         @Override
         public void onResponse(Call<RespuestaAnime> call, Response<RespuestaAnime> response) {
             if(response.isSuccessful())
-                adapter.setItem(response.body().getData());
+                adapter.setItem(response.body().getAnime());
         }
 
         @Override
