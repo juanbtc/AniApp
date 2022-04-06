@@ -65,7 +65,7 @@ public class AnimeAdapter extends RecyclerView.Adapter<AnimeAdapter.AnimeViewHol
     @Override
     public void onBindViewHolder(@NonNull AnimeViewHolder holder, int position) {
         Log.i("TAG", "onBindViewHolder: se ejecuto el on bind");
-      //  holder.name.setText( items.get(position).getTitles().getEn() );
+        holder.name.setText( items.get(position).getTitles().getEn() );
         //holder.description.setText(items.get(position).getDescriptions().getEn());
         //new DownLoadImageTask(holder.cover_image).execute(items.get(position).getCover_image());
         Picasso.get().load(items.get(position).getCover_image()).into(holder.cover_image);

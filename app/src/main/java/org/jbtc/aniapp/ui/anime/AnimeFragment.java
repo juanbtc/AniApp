@@ -103,6 +103,7 @@ public class AnimeFragment extends Fragment implements
         System.out.println("Hilo actual: "+Thread.currentThread().getName());
         animeViewModel.getAnimes()
                 .subscribe((animes, throwable) -> {
+
                     System.out.println("animes: "+animes);
                 });
 

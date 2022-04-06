@@ -12,10 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.lifecycle.ViewModelProvider;
+
 
 import com.squareup.picasso.Picasso;
 import org.jbtc.aniapp.MainActivity;
 import org.jbtc.aniapp.R;
+import org.jbtc.aniapp.component.Fragmento;
+import org.jbtc.aniapp.database.viewmodel.AnimeViewModel;
+
 import org.jbtc.aniapp.contract.AnimeService;
 import org.jbtc.aniapp.contract.EpisodeService;
 import org.jbtc.aniapp.database.AniApiRoom;
@@ -32,10 +37,11 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-public class AnimeDetailsFragment extends Fragment {
+public class AnimeDetailsFragment extends Fragmento {
     private static final String TAG = "SLFG";
     private FragmentAnimeDetailsBinding binding;
     private AppBarMainBinding bindingAppBar;
+    private AnimeViewModel animeViewModel;
 
     @Nullable
     @Override
@@ -48,6 +54,8 @@ public class AnimeDetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        animeViewModel = new ViewModelProvider(this).get(AnimeViewModel.class);
+
         ( (MainActivity)getActivity() ).setDisplayShowTitleEnabled(true,false);
         Bundle b = getArguments();
         if(b!=null){
@@ -90,16 +98,22 @@ public class AnimeDetailsFragment extends Fragment {
     }
     private void setAnimeToLayout(Anime anime){
 
-        getActivity().setTitle(anime.getTitles().getEn());
+        //getActivity().setTitle(anime.getTitles().getEn());
 
         //getMainActivity().setDisplayShowTitleEnabled(true,false);
         //getMainActivity().setTitle(anime.getTitles().getEn());
         //getMainActivity().setExpandedAppbar(true);
-         Log.i(TAG, "setAnimeToLayout: Anime: "+anime);
+        ((MainActivity)getActivity()).setTitle(anime.getTitles().getEn());
 
+        Log.i(TAG, "setAnimeToLayout: Anime: "+anime);
+        getMainActivity().setTitle(anime.getTitles().getEn());
+
+        //binding.tvDetailsAnimeTitle.setText(anime.getTitles().getEn());
         binding.tvDetailsAnimeTitle.setText(anime.getTitles().getEn());
-        binding.tvDetailsAnimeDescription.setText(Html.fromHtml(anime.getDescriptions().getEn()));
         //getMainActivity().loadImgToolbar(anime.getBanner_image());
+
+        //binding.tvDetailsAnimeDescription.setText(Html.fromHtml(anime.getDescriptions().getEn()));
+        getMainActivity().loadImgToolbar(anime.getBanner_image());
 
         if(anime.getBanner_image()!=null){
             Picasso.get().load(anime.getBanner_image()).into(bindingAppBar.ivCollToolCont);}

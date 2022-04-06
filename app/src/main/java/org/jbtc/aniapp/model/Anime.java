@@ -24,10 +24,11 @@ public class Anime {
     private int tmdb_id;
     private byte format;
     private byte status;
-    @TypeConverters(TitlesConverter.class)
+    //@TypeConverters(TitlesConverter.class)
     private Titles titles;
-    @TypeConverters(DescriptionsConverter.class)
-    private Descriptions descriptions;
+    //@TypeConverters(DescriptionsConverter.class)
+    //private Descriptions descriptions;
+    public long descriptions_id;
 
     private Date start_date;
     private Date end_date;
@@ -39,9 +40,9 @@ public class Anime {
     private String cover_image;
     private String cover_color;
     private String banner_image;
-    @TypeConverters(GenresConverter.class)
+   //@TypeConverters(GenresConverter.class)
     private List<String> genres;
-    @TypeConverters(SagasConverter.class)
+   // @TypeConverters(SagasConverter.class)
     private List<Sagas> sagas;
     private int sequel;
     private int prequel;
